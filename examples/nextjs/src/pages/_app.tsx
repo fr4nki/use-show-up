@@ -5,7 +5,16 @@ import { UseShowUpProvider, ShowUpLayout } from 'use-show-up';
 const Layout: ShowUpLayout = ({ close, children }) => (
   <div
     id="layout"
-    style={{ background: 'mediumaquamarine', padding: 12 }}
+    style={{
+      background: 'mediumaquamarine',
+      padding: 12,
+      position: 'fixed',
+      width: '80vw',
+      height: '80vh',
+      top: 0,
+      left: 0,
+      transform: 'translate(10vw, 10vh)',
+    }}
   >
     <p>Layout</p>
 
