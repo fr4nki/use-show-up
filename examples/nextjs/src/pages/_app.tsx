@@ -2,7 +2,9 @@ import type { AppProps } from 'next/app'
 
 import { UseShowUpProvider, ShowUpLayout } from 'use-show-up';
 
-const Layout: ShowUpLayout = ({ close, children }) => (
+import '../style.css';
+
+const CommonPopupLayout: ShowUpLayout = ({ hide, children }) => (
   <div
     id="layout"
     style={{
@@ -22,7 +24,7 @@ const Layout: ShowUpLayout = ({ close, children }) => (
       { children }
     </div>
 
-    <button onClick={close}>Close button in Layout</button>
+    <button onClick={hide}>Close button in Layout</button>
 
     <p>/Layout</p>
   </div>
@@ -33,11 +35,11 @@ const App = ({ Component, pageProps }: AppProps) => (
     // Place to render all Popups. Take a look at _document.tsx
     mountPointSelector='#popupContainer'
     // It might be useful to set one layout for all Popups
-    layout={Layout}
+    layout={CommonPopupLayout}
     // All settings available here and would be inherited by all nested Popups
     // handleShow={() => {}}
-    // closeOnPressEscButton={true}
-    // closeOnPressOutside={false}
+    // hideOnPressEscButton={true}
+    // hideOnPressOutside={false}
     // showOnRender={false}
     // focusFirstElementOnRender={true}
     // handleHide={() => { /* do something */ }}

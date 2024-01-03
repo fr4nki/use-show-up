@@ -1,7 +1,7 @@
 import { defineConfig, Options } from 'tsup';
 
 const commonConfig: Options = {
-  minify: true,
+  // minify: true,
   dts: true,
   format: ['esm', 'cjs'],
   sourcemap: true,

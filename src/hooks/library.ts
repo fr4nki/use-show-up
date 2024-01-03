@@ -11,35 +11,7 @@ import { ShowUpComponent, ShowUpOptions, ShowUpElement } from '../types';
 import { UseShowUpContext, UseShowUpContextProps } from '../context';
 import { UseShowUpContainer, UseShowUpLayout } from '../components';
 import { logger } from '../helpers';
-import { ERRORS, SHOW_UP_CONTAINER_CLASS_NAME } from '../constants';
-
-const generateComponent = <T = object>(
-  component: ShowUpComponent<T>,
-  shown: boolean,
-  options: UseShowUpContextProps,
-  target: HTMLDivElement | null,
-  close: () => void,
-) => (props: T) => {
-  if (!options.mountPointElement || !target) {
-    return createElement(Fragment);
-  }
-
-  return (
-    createElement(
-      UseShowUpContainer,
-      { shown, close, options, target },
-      createElement(
-        options.layout ?? UseShowUpLayout,
-        { close },
-        createElement(
-          component,
-          { ...props, close },
-        ),
-      ),
-    )
-  );
-};
-
+import { ERRORS, SHOW_UP_POPUP_CLASS_NAME } from '../constants';
 
 export const useShowUp = <T = object>(
   component: ShowUpComponent<T>,
@@ -54,36 +26,24 @@ export const useShowUp = <T = object>(
   const targetRef = useRef<HTMLDivElement | null>(null);
   const [isShown, setIsShown] = useState(false);
 
-  const currentShowUpOptions: UseShowUpContextProps = {
+  const showUpOptions: UseShowUpContextProps = {
     ...context,
     ...options,
   };
 
   const show = () => {
-    if (!context.mountPointElement) {
-      logger('warn', ERRORS.hook.callingUnmountedElement);
-    }
-
     if (!isShown) {
       setIsShown(true);
-      currentShowUpOptions?.handleShow?.();
+      showUpOptions?.handleShow?.();
     }
   };
   const hide = () => {
-    if (!context.mountPointElement) {
-      logger('warn', ERRORS.hook.callingUnmountedElement);
-    }
-
     if (isShown) {
       setIsShown(false);
-      currentShowUpOptions?.handleHide?.();
+      showUpOptions?.handleHide?.();
     }
   };
   const toggle = () => {
-    if (!context.mountPointElement) {
-      logger('warn', ERRORS.hook.callingUnmountedElement);
-    }
-
     if (isShown) {
       hide();
     } else {
@@ -91,36 +51,46 @@ export const useShowUp = <T = object>(
     }
   };
 
+  const Component = (props: T) => {
+    if (!showUpOptions.mountPointElement || !targetRef.current) {
+      return createElement(Fragment);
+    }
+
+    return (
+      createElement(
+        UseShowUpContainer, { isShown, hide, showUpOptions, target: targetRef.current },
+        createElement(
+          showUpOptions.layout ?? UseShowUpLayout, { hide },
+          createElement(
+            component, { hide, ...props },
+          ),
+        ),
+      )
+    );
+  };
+
   useEffect(() => {
-    if (currentShowUpOptions.mountPointElement) {
+    if (showUpOptions.mountPointElement) {
       const target = document.createElement('div');
 
       const classList = [
-        SHOW_UP_CONTAINER_CLASS_NAME,
-        component.displayName ? `${SHOW_UP_CONTAINER_CLASS_NAME}-${component.displayName}` : '',
-        currentShowUpOptions.className ?? '',
+        SHOW_UP_POPUP_CLASS_NAME,
+        component.displayName ? `${SHOW_UP_POPUP_CLASS_NAME}-${component.displayName}` : '',
+        showUpOptions.className ?? '',
       ].filter((s) => !!s);
 
       target.classList.add(...classList);
       targetRef.current = target;
 
-      currentShowUpOptions.mountPointElement.appendChild(target);
+      showUpOptions.mountPointElement.appendChild(target);
 
-      if (currentShowUpOptions.showOnRender) {
+      if (showUpOptions.showOnRender) {
         show();
       }
     } else {
       logger('error', ERRORS.hook.attemptToCall);
     }
   }, []);
-
-  const Component = generateComponent(
-    component,
-    isShown,
-    currentShowUpOptions,
-    targetRef.current,
-    hide,
-  );
 
   return [Component, show, hide, toggle];
 };

@@ -1,10 +1,10 @@
 import { ShowUpOptions } from './types';
 
-export const SHOW_UP_CONTAINER_CLASS_NAME = 'show-up-container';
+export const SHOW_UP_POPUP_CLASS_NAME = 'show-up-component';
 
 export const DEFAULT_SHOW_UP_OPTIONS: ShowUpOptions = {
-  closeOnPressEscButton: true,
-  closeOnPressOutside: true,
+  hideOnPressEscButton: true,
+  hideOnPressOutside: true,
   showOnRender: false,
   focusFirstElementOnRender: false,
   layout: null,
@@ -19,7 +19,6 @@ export const ERRORS = {
   },
   hook: {
     attemptToCall: 'Attempt to call "useShowUp". Check your <UseShowUpProvider /> - "mountPointSelector" prop invalid',
-    callingUnmountedElement: 'You are calling not mounted component',
   },
 };
 
@@ -35,14 +34,12 @@ export const FOCUSABLE_SELECTORS = [
   'button',
   'details',
   'summary',
-  'iframe',
-  'object',
   'select',
   'textarea',
-  'label',
   '[contenteditable]',
   'audio',
   'video',
   'details',
   'summary',
+  'label',
 ];

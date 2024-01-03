@@ -6,15 +6,15 @@ import { FOCUSABLE_SELECTORS } from '../constants';
 
 interface Props {
   target: HTMLDivElement;
-  shown: boolean;
-  close: () => void;
-  options: UseShowUpContextProps;
+  isShown: boolean;
+  hide: () => void;
+  showUpOptions: UseShowUpContextProps;
 }
 
-const findAndSetFocus = (target: HTMLDivElement, options: UseShowUpContextProps) => {
+const findAndSetFocus = (target: HTMLDivElement, showUpOptions: UseShowUpContextProps) => {
   let found = false;
 
-  if (!options.focusFirstElementOnRender) {
+  if (!showUpOptions.focusFirstElementOnRender) {
     return;
   }
 
@@ -31,30 +31,30 @@ const findAndSetFocus = (target: HTMLDivElement, options: UseShowUpContextProps)
 export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
   children,
   target,
-  shown,
-  close,
-  options,
+  isShown,
+  hide,
+  showUpOptions,
 }) => {
   const handleEscKeyPress = useCallback((e: KeyboardEvent) => {
-    if (e.code.toLowerCase() === 'escape' && shown && options.closeOnPressEscButton) {
-      close();
+    if (e.code.toLowerCase() === 'escape' && isShown && showUpOptions.hideOnPressEscButton) {
+      hide();
     }
   }, []);
 
   const handleClickOutside = useCallback((e: MouseEvent) => {
-    if (!target.contains(e.target as Node) && shown && options.closeOnPressOutside) {
-      close();
+    if (!target.contains(e.target as Node) && isShown && showUpOptions.hideOnPressOutside) {
+      hide();
     }
   }, []);
 
   useEffect(() => {
-    if (shown) {
+    if (isShown) {
       setTimeout(() => {
         document.addEventListener('click', handleClickOutside);
         document.addEventListener('keyup', handleEscKeyPress);
-      }, 0);
 
-      findAndSetFocus(target, options);
+        findAndSetFocus(target, showUpOptions);
+      }, 0);
     } else {
       document.removeEventListener('click', handleClickOutside);
       document.removeEventListener('keyup', handleEscKeyPress);
@@ -64,17 +64,13 @@ export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
       document.removeEventListener('click', handleClickOutside);
       document.removeEventListener('keyup', handleEscKeyPress);
     };
-  }, [shown]);
+  }, [isShown]);
 
-  if (typeof document === 'undefined') {
-    return null;
-  }
-
-  if (!target) {
-    return null;
-  }
-
-  if (!shown) {
+  if (
+    typeof document === 'undefined' ||
+    !target ||
+    !isShown
+  ) {
     return null;
   }
 

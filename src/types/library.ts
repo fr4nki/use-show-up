@@ -1,19 +1,19 @@
 import { ComponentType, ReactNode } from 'react';
 
 export type ShowUpComponent<T = object> = ComponentType<T & {
-  close: () => void;
+  hide: () => void;
 }>;
 
 export type ShowUpElement<T = object> = ComponentType<T>;
 
 export type ShowUpLayout = ComponentType<{
-  close: () => void;
+  hide: () => void;
   children?: ReactNode;
 }>;
 
 export type ShowUpOptions = {
-  closeOnPressEscButton: boolean;
-  closeOnPressOutside: boolean;
+  hideOnPressEscButton: boolean;
+  hideOnPressOutside: boolean;
   showOnRender: boolean;
   focusFirstElementOnRender: boolean;
   handleHide?: () => void;
