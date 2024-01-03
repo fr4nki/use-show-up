@@ -90,6 +90,10 @@ export const useShowUp = <T = object>(
     } else {
       logger('error', ERRORS.hook.attemptToCall);
     }
+
+    return () => {
+      targetRef.current?.remove();
+    };
   }, []);
 
   return [Component, show, hide, toggle];
