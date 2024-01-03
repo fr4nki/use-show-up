@@ -109,7 +109,7 @@ Show and hide in one function
 
 - `layout` _ShowUpLayout_ or _null_. Default `null`
 
-Sometimes might be useful to separate layout and content [Example here](./examples/nextjs/src/pages/_app.tsx)
+Sometimes might be useful to separate layout and content. See [example here](./examples/nextjs/src/pages/_app.tsx)
 
 - `className` _string_. Default `''`
 
