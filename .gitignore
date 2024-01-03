@@ -1,0 +1,12 @@
+node_modules/
+dist/
+
+.idea/
+.vscode/
+
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+coverage/

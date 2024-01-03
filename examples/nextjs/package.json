@@ -1,0 +1,27 @@
+{
+  "name": "nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "_link": "cd ../../node_modules/react && yarn link && cd ../react-dom && yarn link && cd ../../ && yarn link && cd examples/nextjs && yarn link react && yarn link react-dom && yarn link use-show-up",
+    "_unlink": " cd ../../node_modules/react && yarn unlink && cd ../react-dom && yarn unlink && cd ../../ yarn unlink"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-transition-group": "^4.4.5",
+    "use-show-up": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-transition-group": "^4.4.10",
+    "typescript": "^5"
+  }
+}
