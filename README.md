@@ -2,8 +2,6 @@
 
 A tiny opinionated React hook for popping up stuff with zero fuss.
 
----
-
 ## Example
 
 ```typescript jsx
@@ -55,8 +53,6 @@ const App = () => {
 
 More examples available in [/examples](./examples) directory.
 
----
-
 ## Setup
 
 `npm install use-show-up`
@@ -68,8 +64,6 @@ or
 or
 
 `pnpm add use-show-up`
-
----
 
 ## Usage
 
@@ -175,22 +169,6 @@ Provider accepts same options as useShowUp hook except `mountPointSelector`.
 Place to render all `<Elements />` called by `useShowUp` hook
 
 
-#### Examples
+### Examples
 
 - [Next.js](./examples/nextjs/src/pages/basic.tsx)
-
-
-
-
-
-
-
-
-
-
-
-****
-
-
-
-
