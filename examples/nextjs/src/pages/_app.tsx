@@ -4,7 +4,7 @@ import { UseShowUpProvider, ShowUpLayout } from 'use-show-up';
 
 import '../style.css';
 
-const CommonPopupLayout: ShowUpLayout = ({ hide, children }) => (
+const CommonLayout: ShowUpLayout = ({ hide, children }) => (
   <div
     id="layout"
     style={{
@@ -32,19 +32,18 @@ const CommonPopupLayout: ShowUpLayout = ({ hide, children }) => (
 
 const App = ({ Component, pageProps }: AppProps) => (
   <UseShowUpProvider
-    // Place to render all Popups. Take a look at _document.tsx
-    mountPointSelector='#popupContainer'
+    // Place to render. Take a look at _document.tsx
+    mountPointSelector='#useShowUpContainer'
     // It might be useful to set one layout for all Popups
-    layout={CommonPopupLayout}
+    layout={CommonLayout}
     // All settings available here and would be inherited by all nested Popups
-    // handleShow={() => {}}
     // hideOnPressEscButton={true}
     // hideOnPressOutside={false}
     // showOnRender={false}
     // focusFirstElementOnRender={true}
     // handleHide={() => { /* do something */ }}
     // handleShow={() => { /* do something */ }}
-    // className="my-awesome-popup"
+    // className="my-awesome-element"
   >
     <Component {...pageProps} />
   </UseShowUpProvider>

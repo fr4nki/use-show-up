@@ -9,8 +9,8 @@ export default function Document() {
         <Main />
         <NextScript />
 
-        {/* Root element for UseShowUp hook. See _app.tsx */}
-        <div id="popupContainer" />
+        {/* Root for UseShowUp hook. See _app.tsx */}
+        <div id="useShowUpContainer" />
       </body>
     </Html>
   )

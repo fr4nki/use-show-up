@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { useShowUp, type ShowUpComponent } from 'use-show-up';
 
-const PopupDemo: ShowUpComponent<{ title: string }> = ({ title, hide }) => (
+const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) => (
   <div
     id="popup-demo"
     style={{ background: 'hotpink', padding: 12 }}
@@ -26,9 +26,9 @@ const PopupDemo: ShowUpComponent<{ title: string }> = ({ title, hide }) => (
 );
 
 const BasicPage = () => {
-  const [Popup, show, hide, toggle] = useShowUp(PopupDemo, {
+  const [Element, show, hide, toggle] = useShowUp(ShowUpComponent, {
     showOnRender: true,
-    className: 'my-awesome-basic-popup',
+    className: 'my-basic-example',
     handleHide: () => { console.log('hide'); },
     handleShow: () => { console.log('show'); },
 
@@ -42,15 +42,15 @@ const BasicPage = () => {
 
   return (
     <main style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-      <Popup {...{
-        title: 'My demo popup',
+      <Element {...{
+        title: 'My basic example',
       }} />
 
       <Link href={'/'}>
         &larr; Back
       </Link>
 
-      <p>Basic popup</p>
+      <p>Basic example</p>
 
       <button onClick={show}>Show</button>
       <button onClick={hide}>Hide</button>

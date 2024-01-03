@@ -92,7 +92,7 @@ const [Element, show, hide, toggle] = useShowUp(MyComponent, {
 
 - `<Element />`
 
-Your element, must be inserted to component.
+Your element, must be inserted to the component.
 Typescript will highlight all expected props.
 
 - `show()`

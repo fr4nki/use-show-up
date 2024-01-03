@@ -4,7 +4,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { useShowUp, type ShowUpComponent, ShowUpLayout } from 'use-show-up';
 
-const AnimationDemoLayout: ShowUpLayout = ({ hide, children }) => (
+const ShowUpLayout: ShowUpLayout = ({ hide, children }) => (
   <div
     id="animation-demo-layout"
     style={{
@@ -43,7 +43,7 @@ const AnimationDemoLayout: ShowUpLayout = ({ hide, children }) => (
   </div>
 )
 
-const PopupDemo: ShowUpComponent<{ title: string }> = ({ title, hide }) => {
+const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) => {
   const ref = useRef(null);
   const [isShown, setIsShown] = useState(false);
 
@@ -98,25 +98,25 @@ const PopupDemo: ShowUpComponent<{ title: string }> = ({ title, hide }) => {
 }
 
 const AnimationPage = () => {
-  const [Popup, show, hide, toggle] = useShowUp(PopupDemo, {
-    className: 'my-animated-popup',
+  const [Element, show, hide, toggle] = useShowUp(ShowUpComponent, {
+    className: 'my-animated-example',
     handleHide: () => { console.log('hide'); },
     handleShow: () => { console.log('show'); },
-    layout: AnimationDemoLayout,
+    layout: ShowUpLayout,
     focusFirstElementOnRender: true,
   });
 
   return (
     <main style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-      <Popup {...{
-        title: 'My animated popup',
+      <Element {...{
+        title: 'My animated example',
       }} />
 
       <Link href={'/'}>
         &larr; Back
       </Link>
 
-      <p>Animated popup</p>
+      <p>Animated example</p>
 
       <button onClick={show}>Show</button>
       <button onClick={hide}>Hide</button>
