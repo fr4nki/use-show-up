@@ -51,7 +51,7 @@ const App = () => {
 <div id="showUps"></div>
 ```
 
-More examples available in [/examples](./examples) directory.
+More detailed examples available in [/examples](./examples) directory.
 
 ## Setup
 
@@ -73,7 +73,7 @@ This library contains two necessary React components:
 - useShowUp _hook_
 
 ### useShowUp
-hook might be used in any React Component.
+hook should be placed in the functional component.
 
 #### API
 
@@ -101,7 +101,7 @@ Renders `<Element />` into the place specified in `<UseShowUpProvider />`
 
 - `hide()`
 
-Just hiding rendered `<Element />`. Might be useful sometimes.
+Just hiding rendered `<Element />`
 
 - `toggle()`
 
@@ -109,8 +109,7 @@ Show and hide in one function
 
 - `layout` _ShowUpLayout_ or _null_. Default `null`
 
-Sometimes might be useful to create common layout for popup things.
-So, that's the right place to make it. [Example here](./examples/nextjs/src/pages/_app.tsx)
+Sometimes might be useful to separate layout and content [Example here](./examples/nextjs/src/pages/_app.tsx)
 
 - `className` _string_. Default `''`
 
@@ -163,11 +162,12 @@ Provider should be set at the top of you app, same as any other Providers.
 ```
 
 Provider accepts same options as useShowUp hook except `mountPointSelector`.
+All of these passed props will be applied to all `useShowUp` hook calls.
+Unless it will be overridden in place
 
 - `mountPointSelector` _string_. Required
 
 Place to render all `<Elements />` called by `useShowUp` hook
-
 
 ### Examples
 
