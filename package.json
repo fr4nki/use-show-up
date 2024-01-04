@@ -9,7 +9,10 @@
     "lint": "eslint --ext tsx,ts src",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:ci": "jest --runInBand",
+
+    "posttest": "npm run lint",
+    "prepublishOnly": "npm test && npm run build",
+
     "_clean": "rimraf build"
   },
   "author": "Anton Krivonos <hi@fr4nki.me>",
