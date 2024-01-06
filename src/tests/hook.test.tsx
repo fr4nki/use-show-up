@@ -13,7 +13,7 @@ describe('when UseShowUp hook is in testing', () => {
     cleanup();
   });
 
-  it('should print error if hook called without mountPointSelector', async () => {
+  it('should print error if hook called without mountPoint', async () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const expectedString = 'Use-show-up: ' + ERRORS.hook.attemptToCall;
 
@@ -32,7 +32,7 @@ describe('when UseShowUp hook is in testing', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,
@@ -57,7 +57,7 @@ describe('when UseShowUp hook is in testing', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,
@@ -91,7 +91,7 @@ describe('when UseShowUp hook is in testing', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,
@@ -111,7 +111,7 @@ describe('when UseShowUp hook is in testing', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,
@@ -126,6 +126,27 @@ describe('when UseShowUp hook is in testing', () => {
     expect(target.classList.length).toBe(1);
   });
 
+  it('should print error if mountPoint not found', async () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const expectedString = 'Use-show-up: ' + ERRORS.hook.targetNotFound;
+
+    render(
+      <TestProvider {...{
+        elementSelectorId: 'pop',
+        mountPoint: '#pop1',
+      }}>
+        <TestComponent {...{
+          mountPopup: true,
+          withoutDisplayName: true,
+        }} />
+      </TestProvider>,
+    );
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expectedString);
+
+    consoleErrorSpy.mockRestore();
+  });
+
 
   // TODO: Rewrite these two tests. Jest telling me, handleShow and handleHide still uncovered
   it('handleShow should fire', async () => {
@@ -134,7 +155,7 @@ describe('when UseShowUp hook is in testing', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,
@@ -152,7 +173,7 @@ describe('when UseShowUp hook is in testing', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,

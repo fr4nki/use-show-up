@@ -15,7 +15,7 @@ describe('when Components like container and layout in test', () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
-        mountPointSelector: '#pop',
+        mountPoint: '#pop',
       }}>
         <TestComponent {...{
           mountPopup: true,

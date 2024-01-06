@@ -33,7 +33,7 @@ const CommonLayout: ShowUpLayout = ({ hide, children }) => (
 const App = ({ Component, pageProps }: AppProps) => (
   <UseShowUpProvider
     // Place to render. Take a look at _document.tsx
-    mountPointSelector='#useShowUpContainer'
+    mountPoint='#useShowUpContainer'
     // It might be useful to set one layout for all Popups
     layout={CommonLayout}
     // All settings available here and would be inherited by all nested Popups

@@ -7,11 +7,23 @@ import {
   useState,
 } from 'react';
 
-import { ShowUpComponent, ShowUpOptions, ShowUpElement } from '../types';
-import { UseShowUpContext, UseShowUpContextProps } from '../context';
+import { ShowUpComponent, ShowUpElement, ShowUpOptions } from '../types';
+import { UseShowUpContext } from '../context';
 import { UseShowUpContainer, UseShowUpLayout } from '../components';
 import { logger } from '../helpers';
-import { ERRORS, SHOW_UP_POPUP_CLASS_NAME } from '../constants';
+import { DEFAULT_SHOW_UP_OPTIONS, ERRORS, SHOW_UP_POPUP_CLASS_NAME } from '../constants';
+
+const getMountPointElement = (mountPoint: ShowUpOptions['mountPoint']): Element | null => {
+  if (typeof mountPoint === 'string') {
+    return document.querySelector(mountPoint);
+  }
+
+  if ('current' in mountPoint && mountPoint.current instanceof HTMLElement) {
+    return mountPoint.current;
+  }
+
+  return mountPoint instanceof HTMLElement ? mountPoint : null;
+};
 
 export const useShowUp = <T = object>(
   component: ShowUpComponent<T>,
@@ -23,10 +35,11 @@ export const useShowUp = <T = object>(
   () => void,
 ] => {
   const context = useContext(UseShowUpContext);
-  const targetRef = useRef<HTMLDivElement | null>(null);
+  const showUpElementRef = useRef<HTMLDivElement | null>(null);
   const [isShown, setIsShown] = useState(false);
 
-  const showUpOptions: UseShowUpContextProps = {
+  const showUpOptions: ShowUpOptions = {
+    ...DEFAULT_SHOW_UP_OPTIONS,
     ...context,
     ...options,
   };
@@ -52,13 +65,13 @@ export const useShowUp = <T = object>(
   };
 
   const Component = (props: T) => {
-    if (!showUpOptions.mountPointElement || !targetRef.current) {
+    if (!showUpOptions.mountPoint || !showUpElementRef.current) {
       return createElement(Fragment);
     }
 
     return (
       createElement(
-        UseShowUpContainer, { isShown, hide, showUpOptions, target: targetRef.current },
+        UseShowUpContainer, { isShown, hide, showUpOptions, showUpElement: showUpElementRef.current },
         createElement(
           showUpOptions.layout ?? UseShowUpLayout, { hide },
           createElement(
@@ -70,8 +83,15 @@ export const useShowUp = <T = object>(
   };
 
   useEffect(() => {
-    if (showUpOptions.mountPointElement) {
-      const target = document.createElement('div');
+    if (showUpOptions.mountPoint) {
+      const target = getMountPointElement(showUpOptions.mountPoint);
+
+      if (!target) {
+        logger('error', ERRORS.hook.targetNotFound);
+        return;
+      }
+
+      const showUpElement = document.createElement('div');
 
       const classList = [
         SHOW_UP_POPUP_CLASS_NAME,
@@ -79,10 +99,10 @@ export const useShowUp = <T = object>(
         showUpOptions.className ?? '',
       ].filter((s) => !!s);
 
-      target.classList.add(...classList);
-      targetRef.current = target;
+      showUpElement.classList.add(...classList);
+      showUpElementRef.current = showUpElement;
 
-      showUpOptions.mountPointElement.appendChild(target);
+      target.appendChild(showUpElement);
 
       if (showUpOptions.showOnRender) {
         show();
@@ -92,7 +112,7 @@ export const useShowUp = <T = object>(
     }
 
     return () => {
-      targetRef.current?.remove();
+      showUpElementRef.current?.remove();
     };
   }, []);
 
