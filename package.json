@@ -1,6 +1,6 @@
 {
   "name": "use-show-up",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Simple React hook to render popups",
   "main": "dist/index.js",
   "scripts": {
@@ -9,10 +9,8 @@
     "lint": "eslint --ext tsx,ts src",
     "test": "jest",
     "test:coverage": "jest --coverage",
-
     "posttest": "npm run lint",
     "prepublishOnly": "npm test && npm run build",
-
     "_clean": "rimraf build"
   },
   "author": "Anton Krivonos <hi@fr4nki.me>",
