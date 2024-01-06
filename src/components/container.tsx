@@ -1,17 +1,17 @@
 import { FC, PropsWithChildren, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import { UseShowUpContextProps } from '../context';
+import { ShowUpOptions } from '../types';
 import { FOCUSABLE_SELECTORS } from '../constants';
 
 interface Props {
-  target: HTMLDivElement;
+  showUpElement: HTMLDivElement;
   isShown: boolean;
   hide: () => void;
-  showUpOptions: UseShowUpContextProps;
+  showUpOptions: ShowUpOptions;
 }
 
-const findAndSetFocus = (target: HTMLDivElement, showUpOptions: UseShowUpContextProps) => {
+const findAndSetFocus = (target: HTMLDivElement, showUpOptions: ShowUpOptions) => {
   let found = false;
 
   if (!showUpOptions.focusFirstElementOnRender) {
@@ -30,7 +30,7 @@ const findAndSetFocus = (target: HTMLDivElement, showUpOptions: UseShowUpContext
 
 export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
   children,
-  target,
+  showUpElement,
   isShown,
   hide,
   showUpOptions,
@@ -42,7 +42,7 @@ export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
   }, []);
 
   const handleClickOutside = useCallback((e: MouseEvent) => {
-    if (!target.contains(e.target as Node) && isShown && showUpOptions.hideOnPressOutside) {
+    if (!showUpElement.contains(e.target as Node) && isShown && showUpOptions.hideOnPressOutside) {
       hide();
     }
   }, []);
@@ -53,7 +53,7 @@ export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
         document.addEventListener('click', handleClickOutside);
         document.addEventListener('keyup', handleEscKeyPress);
 
-        findAndSetFocus(target, showUpOptions);
+        findAndSetFocus(showUpElement, showUpOptions);
       }, 0);
     } else {
       document.removeEventListener('click', handleClickOutside);
@@ -68,11 +68,11 @@ export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
 
   if (
     typeof document === 'undefined' ||
-    !target ||
+    !showUpElement ||
     !isShown
   ) {
     return null;
   }
 
-  return createPortal(children, target, new Date().toString());
+  return createPortal(children, showUpElement, new Date().toString());
 };

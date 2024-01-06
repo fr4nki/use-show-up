@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { UseShowUpContextProps } from './types';
+import { ShowUpOptions } from '../types';
 
-export const UseShowUpContext = createContext({} as UseShowUpContextProps);
+export const UseShowUpContext = createContext({} as Partial<ShowUpOptions>);
 UseShowUpContext.displayName = 'UseShowUpContext';

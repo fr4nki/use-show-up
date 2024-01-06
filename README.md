@@ -69,11 +69,12 @@ or
 
 This library contains two necessary React components:
 
-- UseShowUpProvider _component_
+- UseShowUpProvider [optional] _component_
 - useShowUp _hook_
 
 ### useShowUp
-hook should be placed in the functional component.
+Hook should be placed in the functional component. All passed props overrides Provider
+props if Provider exists.
 
 #### API
 
@@ -87,6 +88,7 @@ const [Element, show, hide, toggle] = useShowUp(MyComponent, {
   focusFirstElementOnRender: false,
   handleHide: () => { console.log('hide'); },
   handleShow: () => { console.log('hide'); },
+  mountPoint: myContainerRef // '#myContainer' or document.getElementById('myContainer'),
 });
 ```
 
@@ -96,15 +98,19 @@ Element must be inserted into component
 
 - `show()`
 
-Renders `<Element />` to the place specified in `<UseShowUpProvider />`
+Showing up `<Element />`
 
 - `hide()`
 
-Just hiding rendered `<Element />`
+Hide rendered `<Element />`
 
 - `toggle()`
 
 Show and hide in one function
+
+- `mountPoint` _string_ or _ref_ or _HTMLElement_. Default `''`
+
+Place to render current `<Element />`
 
 - `layout` _ShowUpLayout_ or _null_. Default `null`
 
@@ -139,14 +145,15 @@ Run your callback on `hide()`
 Run your callback on `show()`
 
 ### UseShowUpProvider
-Provider should be set at the top of you app, same as any other Providers.
+Provider is optional and can be set anywhere you want.
+All child uses of useShowUp hook will inherit options from UseShowUpProvider.
+Unless it overridden in place.
 
 #### API
 
 ```typescript jsx
 <UseShowUpProvider
-  mountPointSelector='#showUpContainer'
-
+  mountPoint='#myContainer'
   hideOnPressEscButton={true}
   hideOnPressOutside={true}
   showOnRender={false}
@@ -159,14 +166,6 @@ Provider should be set at the top of you app, same as any other Providers.
   ...
 </UseShowUpProvider>
 ```
-
-Provider accepts same options as useShowUp hook except `mountPointSelector`.
-All of these passed props will be applied to all `useShowUp` hook calls.
-Unless it will be overridden in place
-
-- `mountPointSelector` _string_. Required
-
-Place to render all `<Elements />` called by `useShowUp` hook
 
 ### Examples
 

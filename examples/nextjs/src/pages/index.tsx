@@ -1,18 +1,24 @@
 import Link from 'next/link';
 
+const links = [
+  { text: 'Basic demo', href: '/basic' },
+  { text: 'Animation demo', href: '/animation' },
+  { text: 'Render to ref', href: '/ref' },
+  { text: 'Multiple providers', href: '/multipleProviders' },
+]
+
 const IndexPage = () => (
   <main>
     <ul>
-      <li>
-        <Link href={'/basic'}>
-          Basic demo
-        </Link>
-      </li>
-      <li>
-        <Link href={'/animation'}>
-          Animated demo
-        </Link>
-      </li>
+      {
+        links.map(({ text, href }) => (
+          <li key={href}>
+            <Link href={href}>
+              { text }
+            </Link>
+          </li>
+        ))
+      }
     </ul>
   </main>
 );

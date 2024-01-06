@@ -89,9 +89,9 @@ export const TestComponent: FC<{
   );
 };
 
-export const TestProvider: FC<PropsWithChildren<{ elementSelectorId?: string; mountPointSelector?: string }>> = ({
+export const TestProvider: FC<PropsWithChildren<{ elementSelectorId?: string; mountPoint?: string }>> = ({
   elementSelectorId,
-  mountPointSelector,
+  mountPoint,
   children,
 }) => {
   if (elementSelectorId) {
@@ -106,7 +106,7 @@ export const TestProvider: FC<PropsWithChildren<{ elementSelectorId?: string; mo
       {/* @ts-ignore */}
       <UseShowUpProvider {...{
         hideOnPressEscButton: true,
-        mountPointSelector,
+        mountPoint,
       }}>
         <div>
           { children }

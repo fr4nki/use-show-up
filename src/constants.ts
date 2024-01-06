@@ -3,6 +3,7 @@ import { ShowUpOptions } from './types';
 export const SHOW_UP_POPUP_CLASS_NAME = 'show-up-component';
 
 export const DEFAULT_SHOW_UP_OPTIONS: ShowUpOptions = {
+  mountPoint: '',
   hideOnPressEscButton: true,
   hideOnPressOutside: true,
   showOnRender: false,
@@ -12,13 +13,9 @@ export const DEFAULT_SHOW_UP_OPTIONS: ShowUpOptions = {
 };
 
 export const ERRORS = {
-  context: {
-    mountPointUndefined: 'MountPointSelector is not defined',
-    mountPointElementNotFound: (selector: string) =>
-      `Element of mountPointSelector not found. Passed selector: "${selector}"`,
-  },
   hook: {
-    attemptToCall: 'Attempt to call "useShowUp". Check your <UseShowUpProvider /> - "mountPointSelector" prop invalid',
+    attemptToCall: 'Attempt to call "useShowUp". Check your provider or hook - "mountPoint" prop invalid',
+    targetNotFound: 'Place to render not found. Check mountPoint prop in Provider or Hook',
   },
 };
 

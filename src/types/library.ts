@@ -1,10 +1,10 @@
-import { ComponentType, ReactNode } from 'react';
+import { ComponentType, ReactNode, RefObject } from 'react';
+
+export type ShowUpElement<T = object> = ComponentType<T>;
 
 export type ShowUpComponent<T = object> = ComponentType<T & {
   hide: () => void;
 }>;
-
-export type ShowUpElement<T = object> = ComponentType<T>;
 
 export type ShowUpLayout = ComponentType<{
   hide: () => void;
@@ -12,6 +12,7 @@ export type ShowUpLayout = ComponentType<{
 }>;
 
 export type ShowUpOptions = {
+  mountPoint: string | HTMLElement | RefObject<HTMLElement>;
   hideOnPressEscButton: boolean;
   hideOnPressOutside: boolean;
   showOnRender: boolean;
@@ -22,3 +23,6 @@ export type ShowUpOptions = {
   className?: string;
 };
 
+// export type ShowUpProviderOptions = Partial<ShowUpOptions> & Required<Pick<ShowUpOptions, 'mountPoint'>>;
+//
+// export type ShowUpHookOptions = Partial<ShowUpOptions>;
