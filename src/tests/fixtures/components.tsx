@@ -1,4 +1,10 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, {
+  FC,
+  PropsWithChildren,
+  ReactElement,
+  RefObject,
+  useRef,
+} from 'react';
 
 import { ShowUpComponent } from '../../types';
 import { useShowUp } from '../../hooks';
@@ -15,6 +21,7 @@ import {
 export const TestPopup: ShowUpComponent<{ name: string }> = ({ name }) => (
   <div id={POPUP_ID}>
     my popup: {name}
+
     <input type="text" />
   </div>
 );
@@ -23,6 +30,7 @@ TestPopup.displayName = TEST_POPUP_DISPLAY_NAME;
 export const TestPopupWithoutDisplayName: ShowUpComponent<{ name: string }> = ({ name }) => (
   <div id={POPUP_ID}>
     my popup: {name}
+
     <input type="text" />
   </div>
 );
@@ -89,7 +97,10 @@ export const TestComponent: FC<{
   );
 };
 
-export const TestProvider: FC<PropsWithChildren<{ elementSelectorId?: string; mountPoint?: string }>> = ({
+export const TestProvider: FC<PropsWithChildren<{
+  elementSelectorId?: string;
+  mountPoint?: string | HTMLElement | RefObject<HTMLElement>;
+}>> = ({
   elementSelectorId,
   mountPoint,
   children,
@@ -113,5 +124,24 @@ export const TestProvider: FC<PropsWithChildren<{ elementSelectorId?: string; mo
         </div>
       </UseShowUpProvider>
     </>
+  );
+};
+
+export const RefContainer: FC<{
+  containerId: string;
+  children: (ref: RefObject<HTMLDivElement>) => ReactElement;
+}> = ({ containerId, children }) => {
+  const containerRef = useRef(null);
+
+  return (
+    <div {...{
+      id: containerId,
+    }}>
+      <div {...{
+        ref: containerRef,
+      }} />
+
+      { children(containerRef) }
+    </div>
   );
 };

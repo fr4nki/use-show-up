@@ -1,6 +1,7 @@
 import {
   createElement,
   Fragment,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -44,25 +45,27 @@ export const useShowUp = <T = object>(
     ...options,
   };
 
-  const show = () => {
+  const show = useCallback(() => {
     if (!isShown) {
       setIsShown(true);
       showUpOptions?.handleShow?.();
     }
-  };
-  const hide = () => {
+  }, [isShown, showUpOptions?.handleShow]);
+
+  const hide = useCallback(() => {
     if (isShown) {
       setIsShown(false);
       showUpOptions?.handleHide?.();
     }
-  };
-  const toggle = () => {
+  }, [isShown, showUpOptions?.handleHide]);
+
+  const toggle = useCallback(() => {
     if (isShown) {
       hide();
     } else {
       show();
     }
-  };
+  }, [isShown]);
 
   const Component = (props: T) => {
     if (!showUpOptions.mountPoint || !showUpElementRef.current) {
