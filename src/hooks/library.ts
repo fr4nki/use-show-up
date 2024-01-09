@@ -12,7 +12,7 @@ import { ShowUpComponent, ShowUpElement, ShowUpOptions } from '../types';
 import { UseShowUpContext } from '../context';
 import { UseShowUpContainer, UseShowUpLayout } from '../components';
 import { logger } from '../helpers';
-import { DEFAULT_SHOW_UP_OPTIONS, ERRORS, SHOW_UP_POPUP_CLASS_NAME } from '../constants';
+import { DEFAULT_SHOW_UP_OPTIONS, ERRORS, SHOW_UP_ELEMENT_CLASS_NAME } from '../constants';
 
 const getMountPointElement = (mountPoint: ShowUpOptions['mountPoint']): Element | null => {
   if (typeof mountPoint === 'string') {
@@ -97,8 +97,8 @@ export const useShowUp = <T = object>(
       const showUpElement = document.createElement('div');
 
       const classList = [
-        SHOW_UP_POPUP_CLASS_NAME,
-        component.displayName ? `${SHOW_UP_POPUP_CLASS_NAME}-${component.displayName}` : '',
+        SHOW_UP_ELEMENT_CLASS_NAME,
+        component.displayName ? `${SHOW_UP_ELEMENT_CLASS_NAME}-${component.displayName}` : '',
         showUpOptions.className ?? '',
       ].filter((s) => !!s);
 
