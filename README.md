@@ -39,7 +39,8 @@ const Component = () => {
 
 const App = () => {
   <UseShowUpProvider
-    // Place to render all Popups. Probably somewhere in <body>
+    // Place to render all ShowUpElements. Probably somewhere in <body>
+    // Could be valid CSS selector, HTMLElement or RefObject
     mountPointSelector='#showUps'
   >
     <Component>
@@ -159,7 +160,7 @@ Unless it overridden in place.
   showOnRender={false}
   focusFirstElementOnRender={false}
   handleHide={() => { console.log('hide'); }}
-  handleShow={() => { console.log('hide'); }}
+  handleShow={() => { console.log('show'); }}
   layout={({ children }) => <>{ children }</> }
   className="my-show-up-element"
 >
