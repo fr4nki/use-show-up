@@ -3,10 +3,15 @@ import React from 'react';
 import { act, cleanup, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { ERRORS, SHOW_UP_POPUP_CLASS_NAME } from '../constants';
+import { CONSOLE_LOG_PREFIX, ERRORS, SHOW_UP_ELEMENT_CLASS_NAME } from '../constants';
 
 import { TestComponent, TestProvider } from './fixtures/components';
-import { POPUP_BUTTON_HIDE_ID, POPUP_BUTTON_TOGGLE_ID, POPUP_ID, TEST_POPUP_DISPLAY_NAME } from './fixtures/constants';
+import {
+  TEST_ELEMENT_BUTTON_HIDE_ID,
+  TEST_ELEMENT_BUTTON_TOGGLE_ID,
+  TEST_ELEMENT_ID,
+  TEST_ELEMENT_DISPLAY_NAME,
+} from './fixtures/constants';
 
 describe('when UseShowUp hook is in testing', () => {
   afterEach(() => {
@@ -15,7 +20,7 @@ describe('when UseShowUp hook is in testing', () => {
 
   it('should print error if hook called without mountPoint', async () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const expectedString = 'Use-show-up: ' + ERRORS.hook.attemptToCall;
+    const expectedString = CONSOLE_LOG_PREFIX + ERRORS.hook.attemptToCall;
 
     render(
       <TestProvider>
@@ -35,21 +40,23 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
         }} />
       </TestProvider>,
     );
 
     await waitFor(() => {
-      const popupElement = document.getElementById(POPUP_ID);
-      expect(popupElement).toBeInTheDocument();
+      const element = document.getElementById(TEST_ELEMENT_ID);
+      expect(element).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      const popupElement = document.getElementById(POPUP_ID);
-      const buttonHide = document.getElementById(POPUP_BUTTON_HIDE_ID);
-      buttonHide?.click();
-      expect(popupElement).not.toBeInTheDocument();
+      const element = document.getElementById(TEST_ELEMENT_ID);
+      const buttonElementHide = document.getElementById(TEST_ELEMENT_BUTTON_HIDE_ID);
+
+      buttonElementHide?.click();
+
+      expect(element).not.toBeInTheDocument();
     });
   });
 
@@ -60,33 +67,37 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
         }} />
       </TestProvider>,
     );
 
     await waitFor(() => {
-      const popupElement = document.getElementById(POPUP_ID);
-      expect(popupElement).toBeInTheDocument();
+      const element = document.getElementById(TEST_ELEMENT_ID);
+      expect(element).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      const popupElement = document.getElementById(POPUP_ID);
-      const buttonToggle = document.getElementById(POPUP_BUTTON_TOGGLE_ID);
-      buttonToggle?.click();
-      expect(popupElement).not.toBeInTheDocument();
+      const element = document.getElementById(TEST_ELEMENT_ID);
+      const buttonElementVisibilityToggle = document.getElementById(TEST_ELEMENT_BUTTON_TOGGLE_ID);
+
+      buttonElementVisibilityToggle?.click();
+
+      expect(element).not.toBeInTheDocument();
     });
 
     await waitFor(() => {
-      const popupElement = document.getElementById(POPUP_ID);
-      const buttonToggle = document.getElementById(POPUP_BUTTON_TOGGLE_ID);
-      buttonToggle?.click();
-      expect(popupElement).toBeInTheDocument();
+      const element = document.getElementById(TEST_ELEMENT_ID);
+      const buttonElementVisibilityToggle = document.getElementById(TEST_ELEMENT_BUTTON_TOGGLE_ID);
+
+      buttonElementVisibilityToggle?.click();
+
+      expect(element).toBeInTheDocument();
     });
   });
 
-  it('should apply addition classes for popup', async () => {
-    const popupClassName = 'my-popup-class-name';
+  it('should apply addition classes for element', async () => {
+    const elementClassName = 'my-element-class-name';
 
     render(
       <TestProvider {...{
@@ -94,17 +105,17 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
-          popupClassName,
+          mountElement: true,
+          elementClassName,
         }} />
       </TestProvider>,
     );
 
-    const popupElements = document.querySelectorAll(`.${SHOW_UP_POPUP_CLASS_NAME}`);
-    const target = Array.from(popupElements).slice(-1)[0];
+    const element = document.querySelectorAll(`.${SHOW_UP_ELEMENT_CLASS_NAME}`);
+    const target = Array.from(element).slice(-1)[0];
 
-    expect(target).toHaveClass(popupClassName);
-    expect(target).toHaveClass(`${SHOW_UP_POPUP_CLASS_NAME}-${TEST_POPUP_DISPLAY_NAME}`);
+    expect(target).toHaveClass(elementClassName);
+    expect(target).toHaveClass(`${SHOW_UP_ELEMENT_CLASS_NAME}-${TEST_ELEMENT_DISPLAY_NAME}`);
   });
 
   it('should work as expected without passed extra classes', async () => {
@@ -114,21 +125,21 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
           withoutDisplayName: true,
         }} />
       </TestProvider>,
     );
 
-    const popupElements = document.querySelectorAll(`.${SHOW_UP_POPUP_CLASS_NAME}`);
-    const target = Array.from(popupElements).slice(-1)[0];
+    const elements = document.querySelectorAll(`.${SHOW_UP_ELEMENT_CLASS_NAME}`);
+    const target = Array.from(elements).slice(-1)[0];
 
     expect(target.classList.length).toBe(1);
   });
 
   it('should print error if mountPoint not found', async () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const expectedString = 'Use-show-up: ' + ERRORS.hook.targetNotFound;
+    const expectedString = CONSOLE_LOG_PREFIX + ERRORS.hook.targetNotFound;
 
     render(
       <TestProvider {...{
@@ -136,7 +147,7 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop1',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
           withoutDisplayName: true,
         }} />
       </TestProvider>,
@@ -158,7 +169,7 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
           handleShow,
         }} />
       </TestProvider>,
@@ -176,14 +187,14 @@ describe('when UseShowUp hook is in testing', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
           handleHide,
         }} />
       </TestProvider>,
     );
 
     await act(() => {
-      const btn = document.getElementById(POPUP_BUTTON_HIDE_ID);
+      const btn = document.getElementById(TEST_ELEMENT_BUTTON_HIDE_ID);
       btn?.click();
     });
 

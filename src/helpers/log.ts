@@ -1,5 +1,5 @@
-type LoggerType = 'log' | 'error' | 'warn';
+import { CONSOLE_LOG_PREFIX } from '../constants';
 
-export const logger = (type: LoggerType, toLog: string) => {
-  console[type](`Use-show-up: ${toLog}`);
+export const logger = (type: 'log' | 'error' | 'warn', toLog: string) => {
+  console[type](`${CONSOLE_LOG_PREFIX}${toLog}`);
 };

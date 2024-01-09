@@ -11,62 +11,66 @@ import { useShowUp } from '../../hooks';
 import { UseShowUpProvider } from '../../context';
 
 import {
-  POPUP_BUTTON_HIDE_ID,
-  POPUP_BUTTON_SHOW_ID,
-  POPUP_BUTTON_TOGGLE_ID,
-  POPUP_ID,
-  TEST_POPUP_DISPLAY_NAME,
+  TEST_ELEMENT_BUTTON_HIDE_ID,
+  TEST_ELEMENT_BUTTON_SHOW_ID,
+  TEST_ELEMENT_BUTTON_TOGGLE_ID,
+  TEST_ELEMENT_ID,
+  TEST_ELEMENT_DISPLAY_NAME,
 } from './constants';
 
-export const TestPopup: ShowUpComponent<{ name: string }> = ({ name }) => (
-  <div id={POPUP_ID}>
-    my popup: {name}
+const ElInternal: FC<{ name: string }> = ({ name }) => (
+  <div id={TEST_ELEMENT_ID}>
+    my element is "{name}"
 
     <input type="text" />
   </div>
 );
-TestPopup.displayName = TEST_POPUP_DISPLAY_NAME;
 
-export const TestPopupWithoutDisplayName: ShowUpComponent<{ name: string }> = ({ name }) => (
-  <div id={POPUP_ID}>
-    my popup: {name}
+export const TestElementWithDisplayName: ShowUpComponent<{ name: string }> = ({ name }) => (
+  <ElInternal {...{
+    name,
+  }} />
+);
+TestElementWithDisplayName.displayName = TEST_ELEMENT_DISPLAY_NAME;
 
-    <input type="text" />
-  </div>
+export const TestElementWithoutDisplayName: ShowUpComponent<{ name: string }> = ({ name }) => (
+  <ElInternal {...{
+    name,
+  }} />
 );
 
 export const TestComponent: FC<{
-  mountPopup?: boolean;
+  mountElement?: boolean;
   showOnRender?: boolean;
   handleShow?: () => void;
   handleHide?: () => void;
-  popupClassName?: string;
+  elementClassName?: string;
   focusFirstElementOnRender?: boolean;
   withoutDisplayName?: boolean;
 }> = ({
-  mountPopup = true,
+  mountElement = true,
   showOnRender = true,
   focusFirstElementOnRender = false,
   handleHide,
   handleShow,
-  popupClassName,
+  elementClassName,
   withoutDisplayName = false,
 }) => {
-  const Popup = withoutDisplayName ? TestPopupWithoutDisplayName : TestPopup;
+  const Component = withoutDisplayName ? TestElementWithoutDisplayName : TestElementWithDisplayName;
 
-  const [Element, show, hide, toggle] = useShowUp(Popup, {
+  const [Element, show, hide, toggle] = useShowUp(Component, {
     showOnRender,
     handleHide,
     handleShow,
     focusFirstElementOnRender,
-    className: popupClassName,
+    className: elementClassName,
     hideOnPressEscButton: true,
   });
 
   return (
     <main>
       {
-        mountPopup && (
+        mountElement && (
           <Element {...{
             name: 'name',
           }} />
@@ -74,21 +78,21 @@ export const TestComponent: FC<{
       }
 
       <button {...{
-        id: POPUP_BUTTON_SHOW_ID,
+        id: TEST_ELEMENT_BUTTON_SHOW_ID,
         onClick: show,
       }}>
         show
       </button>
 
       <button {...{
-        id: POPUP_BUTTON_HIDE_ID,
+        id: TEST_ELEMENT_BUTTON_HIDE_ID,
         onClick: hide,
       }}>
         hide
       </button>
 
       <button {...{
-        id: POPUP_BUTTON_TOGGLE_ID,
+        id: TEST_ELEMENT_BUTTON_TOGGLE_ID,
         onClick: toggle,
       }}>
         toggle
@@ -127,10 +131,13 @@ export const TestProvider: FC<PropsWithChildren<{
   );
 };
 
-export const RefContainer: FC<{
+export const TestContainerWithRef: FC<{
   containerId: string;
   children: (ref: RefObject<HTMLDivElement>) => ReactElement;
-}> = ({ containerId, children }) => {
+}> = ({
+  containerId,
+  children,
+}) => {
   const containerRef = useRef(null);
 
   return (

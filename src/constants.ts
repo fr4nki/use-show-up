@@ -1,6 +1,8 @@
 import { ShowUpOptions } from './types';
 
-export const SHOW_UP_POPUP_CLASS_NAME = 'show-up-component';
+export const CONSOLE_LOG_PREFIX = 'Use-show-up: ';
+
+export const SHOW_UP_ELEMENT_CLASS_NAME = 'show-up-element';
 
 export const DEFAULT_SHOW_UP_OPTIONS: ShowUpOptions = {
   mountPoint: '',

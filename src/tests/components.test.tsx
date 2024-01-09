@@ -4,7 +4,7 @@ import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react
 import '@testing-library/jest-dom';
 
 import { TestComponent, TestProvider } from './fixtures/components';
-import { POPUP_ID } from './fixtures/constants';
+import { TEST_ELEMENT_ID } from './fixtures/constants';
 
 describe('when Components like container and layout in test', () => {
   afterEach(() => {
@@ -18,13 +18,13 @@ describe('when Components like container and layout in test', () => {
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
         }} />
       </TestProvider>,
     );
 
-    const popup = document.getElementById(POPUP_ID);
-    expect(popup).toBeInTheDocument();
+    const element = document.getElementById(TEST_ELEMENT_ID);
+    expect(element).toBeInTheDocument();
 
     await act(async () => {
       setTimeout(() => {
@@ -33,8 +33,8 @@ describe('when Components like container and layout in test', () => {
     });
 
     await waitFor(() => {
-      const hiddenPopup = document.getElementById(POPUP_ID);
-      expect(hiddenPopup).not.toBeInTheDocument();
+      const hiddenElement = document.getElementById(TEST_ELEMENT_ID);
+      expect(hiddenElement).not.toBeInTheDocument();
     });
   });
 });

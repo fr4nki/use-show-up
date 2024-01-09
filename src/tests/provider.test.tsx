@@ -3,9 +3,8 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { RefContainer, TestComponent, TestProvider } from './fixtures/components';
-import { POPUP_ID } from './fixtures/constants';
-
+import { TestContainerWithRef, TestComponent, TestProvider } from './fixtures/components';
+import { TEST_ELEMENT_ID } from './fixtures/constants';
 
 describe('when UseShowUpProvider testing', () => {
   afterEach(() => {
@@ -38,19 +37,19 @@ describe('when UseShowUpProvider testing', () => {
         elementSelectorId: 'container',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
         }} />
       </TestProvider>,
     );
 
-    const popupElement = document.getElementById(POPUP_ID);
-    expect(popupElement).toBeInTheDocument();
+    const element = document.getElementById(TEST_ELEMENT_ID);
+    expect(element).toBeInTheDocument();
   });
 
   it('should not fail if mountPoint present as Ref', async () => {
     render(
       <>
-        <RefContainer {...{
+        <TestContainerWithRef {...{
           containerId: 'refContainer',
         }}>
           {
@@ -60,34 +59,34 @@ describe('when UseShowUpProvider testing', () => {
                 elementSelectorId: 'container',
               }}>
                 <TestComponent {...{
-                  mountPopup: true,
+                  mountElement: true,
                 }} />
               </TestProvider>
             )
           }
-        </RefContainer>,
+        </TestContainerWithRef>,
       </>,
     );
 
-    const popupElement = document.getElementById(POPUP_ID);
+    const element = document.getElementById(TEST_ELEMENT_ID);
 
-    expect(popupElement).toBeInTheDocument();
+    expect(element).toBeInTheDocument();
   });
 
-  it('should render popup if all necessary props are passed', async () => {
+  it('should render element if all necessary props are passed', async () => {
     render(
       <TestProvider {...{
         elementSelectorId: 'pop',
         mountPoint: '#pop',
       }}>
         <TestComponent {...{
-          mountPopup: true,
+          mountElement: true,
         }} />
       </TestProvider>,
     );
 
-    const popupElement = document.getElementById(POPUP_ID);
+    const element = document.getElementById(TEST_ELEMENT_ID);
 
-    expect(popupElement).toBeInTheDocument();
+    expect(element).toBeInTheDocument();
   });
 });

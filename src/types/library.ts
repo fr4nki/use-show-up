@@ -22,7 +22,3 @@ export type ShowUpOptions = {
   layout?: ShowUpLayout | null;
   className?: string;
 };
-
-// export type ShowUpProviderOptions = Partial<ShowUpOptions> & Required<Pick<ShowUpOptions, 'mountPoint'>>;
-//
-// export type ShowUpHookOptions = Partial<ShowUpOptions>;
