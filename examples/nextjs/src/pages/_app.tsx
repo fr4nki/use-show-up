@@ -34,9 +34,9 @@ const App = ({ Component, pageProps }: AppProps) => (
   <UseShowUpProvider
     // Place to render. Take a look at _document.tsx
     mountPoint='#useShowUpContainer'
-    // It might be useful to set one layout for all Popups
+    // It might be useful to set one layout for all ShowUp components
     layout={CommonLayout}
-    // All settings available here and would be inherited by all nested Popups
+    // All settings available here and would be inherited by all nested ShowUp components
     // hideOnPressEscButton={true}
     // hideOnPressOutside={false}
     // showOnRender={false}

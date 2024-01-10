@@ -61,7 +61,7 @@ const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) =>
       unmountOnExit
     >
     <div
-      id="animation-demo-popup"
+      id="animation-demo"
       ref={ref}
       style={{
         background: 'hotpink',
@@ -76,7 +76,7 @@ const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) =>
       <p
         style={{ marginTop: 0, fontWeight: 700 }}
       >
-        Popup title is "{title}"
+        Title is "{title}"
       </p>
 
       <div>
@@ -108,9 +108,7 @@ const AnimationPage = () => {
 
   return (
     <main style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-      <Element {...{
-        title: 'My animated example',
-      }} />
+      <Element title='My animated example' />
 
       <Link href={'/'}>
         &larr; Back
@@ -118,9 +116,9 @@ const AnimationPage = () => {
 
       <p>Animated example</p>
 
-      <button onClick={show}>Show</button>
-      <button onClick={hide}>Hide</button>
-      <button onClick={toggle}>Toggle</button>
+      <button onClick={() => show()}>Show</button>
+      <button onClick={() => hide()}>Hide</button>
+      <button onClick={() => toggle()}>Toggle</button>
 
     </main>
   )

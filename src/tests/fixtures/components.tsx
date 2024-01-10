@@ -79,21 +79,21 @@ export const TestComponent: FC<{
 
       <button {...{
         id: TEST_ELEMENT_BUTTON_SHOW_ID,
-        onClick: show,
+        onClick: () => show(),
       }}>
         show
       </button>
 
       <button {...{
         id: TEST_ELEMENT_BUTTON_HIDE_ID,
-        onClick: hide,
+        onClick: () => hide(),
       }}>
         hide
       </button>
 
       <button {...{
         id: TEST_ELEMENT_BUTTON_TOGGLE_ID,
-        onClick: toggle,
+        onClick: () => toggle(),
       }}>
         toggle
       </button>

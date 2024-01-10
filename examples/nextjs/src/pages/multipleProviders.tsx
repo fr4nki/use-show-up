@@ -5,14 +5,14 @@ import Link from "next/link";
 
 const ShowUpComponentFirst: ShowUpComponent = ({ hide }) => (
   <div
-    id="popup-demo"
+    id="show-up-demo"
     style={{ background: 'hotpink', padding: 12, position: 'absolute', top: 10, right: 10 }}
   >
-    <p>First Popup</p>
+    <p>First</p>
 
     <div style={{ marginTop: 12 }}>
       <button onClick={hide}>
-        close me
+        Close me
       </button>
     </div>
   </div>
@@ -20,14 +20,14 @@ const ShowUpComponentFirst: ShowUpComponent = ({ hide }) => (
 
 const ShowUpComponentSecond: ShowUpComponent = ({ hide }) => (
   <div
-    id="popup-demo"
+    id="show-up-demo"
     style={{ background: 'hotpink', padding: 12, position: 'absolute', top: 10, right: 10 }}
   >
-    <p>Second Popup</p>
+    <p>Second</p>
 
     <div style={{ marginTop: 12 }}>
       <button onClick={hide}>
-        close me
+        Close me
       </button>
     </div>
   </div>
@@ -42,7 +42,7 @@ const FirstComponent = () => {
 
       <ElementFirst />
 
-      <button onClick={showFirst}>Show first</button>
+      <button onClick={() => showFirst()}>Show first</button>
     </div>
   )
 };
@@ -56,7 +56,7 @@ const SecondComponent = () => {
 
       <ElementSecond />
 
-      <button onClick={showSecond}>Show second</button>
+      <button onClick={() => showSecond()}>Show second</button>
     </div>
   )
 };
