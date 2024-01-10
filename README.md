@@ -7,7 +7,11 @@ A tiny opinionated React hook for popping up stuff with zero fuss.
 ```typescript jsx
 import { useShowUp, type ShowUpComponent } from 'use-show-up';
 
-const ShowUpElement: ShowUpComponent<{ title: string }> = ({ title, hide }) => (
+interface ShowUpElementProps {
+  title: string;
+}
+
+const ShowUpElement: ShowUpComponent<ShowUpElementProps> = ({ title, hide }) => (
   <div>
     <h1>Title is "{title}"</p>
 
@@ -31,8 +35,8 @@ const Component = () => {
         title: 'My demo',
       }} />
 
-      <button onClick={show}>Show</button>
-      <button onClick={hide}>Hide</button>
+      <button onClick={() => show()}>Show</button>
+      <button onClick={() => hide()}>Hide</button>
     </main>
   )
 };
@@ -95,19 +99,19 @@ const [Element, show, hide, toggle] = useShowUp(MyComponent, {
 
 - `<Element />`
 
-Element must be inserted into component
+Element must be inserted into your component
 
-- `show()`
+- `show()` _Partial\<ShowUpElementProps>_ or _undefined_. Default `undefined`
 
-Showing up `<Element />`
+Showing up `<Element />`. Possible to pass part of full prop list of MyComponent as argument. E.g: `show({ some: 'thing' })`.
 
 - `hide()`
 
 Hide rendered `<Element />`
 
-- `toggle()`
+- `toggle()` _Partial\<ShowUpElementProps>_ or _undefined_. Default `undefined`
 
-Show and hide in one function
+Show and hide in one function. Same as `show`, possible to pass part of full prop list of MyComponent as argument
 
 - `mountPoint` _string_ or _ref_ or _HTMLElement_. Default `''`
 

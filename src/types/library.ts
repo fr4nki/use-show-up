@@ -2,6 +2,8 @@ import { ComponentType, ReactNode, RefObject } from 'react';
 
 export type ShowUpElement<T = object> = ComponentType<T>;
 
+export type PartialShowUpElementProps<T = object> = Partial<Omit<T, 'hide'>>;
+
 export type ShowUpComponent<T = object> = ComponentType<T & {
   hide: () => void;
 }>;

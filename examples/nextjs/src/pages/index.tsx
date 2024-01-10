@@ -5,6 +5,7 @@ const links = [
   { text: 'Animation demo', href: '/animation' },
   { text: 'Render to ref', href: '/ref' },
   { text: 'Multiple providers', href: '/multipleProviders' },
+  { text: 'Render in loop and override props', href: '/loop' },
 ]
 
 const IndexPage = () => (

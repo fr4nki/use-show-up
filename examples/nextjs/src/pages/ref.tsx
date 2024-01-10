@@ -5,10 +5,10 @@ import { useRef } from "react";
 
 const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) => (
   <div
-    id="popup-demo"
+    id="show-up-demo"
     style={{ background: 'hotpink', padding: 12, position: 'absolute', top: 10, right: 10 }}
   >
-    <p>Popup title is "{title}"</p>
+    <p>Title is "{title}"</p>
 
     <div>
       <label>
@@ -40,9 +40,7 @@ const RenderToRefPage = () => {
 
   return (
     <main style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-      <Element {...{
-        title: 'My Ref example',
-      }} />
+      <Element title='My Ref example' />
 
       <div id="my-ref-showup-container" ref={targetRef} />
 
@@ -52,9 +50,9 @@ const RenderToRefPage = () => {
 
       <p>Ref example</p>
 
-      <button onClick={show}>Show</button>
-      <button onClick={hide}>Hide</button>
-      <button onClick={toggle}>Toggle</button>
+      <button onClick={() => show()}>Show</button>
+      <button onClick={() => hide()}>Hide</button>
+      <button onClick={() => toggle()}>Toggle</button>
     </main>
   )
 };

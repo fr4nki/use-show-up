@@ -8,11 +8,11 @@ import {
   useState,
 } from 'react';
 
-import { ShowUpComponent, ShowUpElement, ShowUpOptions } from '../types';
-import { UseShowUpContext } from '../context';
-import { UseShowUpContainer, UseShowUpLayout } from '../components';
 import { logger } from '../helpers';
+import { UseShowUpContainer, UseShowUpLayout } from '../components';
 import { DEFAULT_SHOW_UP_OPTIONS, ERRORS, SHOW_UP_ELEMENT_CLASS_NAME } from '../constants';
+import { UseShowUpContext } from '../context';
+import { PartialShowUpElementProps, ShowUpComponent, ShowUpElement, ShowUpOptions } from '../types';
 
 const getMountPointElement = (mountPoint: ShowUpOptions['mountPoint']): Element | null => {
   if (typeof mountPoint === 'string') {
@@ -31,13 +31,14 @@ export const useShowUp = <T = object>(
   options?: Partial<ShowUpOptions>,
 ): [
   ShowUpElement<T>,
+  (elementProps?: PartialShowUpElementProps<T>) => void,
   () => void,
-  () => void,
-  () => void,
+  (elementProps?: PartialShowUpElementProps<T>) => void,
 ] => {
   const context = useContext(UseShowUpContext);
   const showUpElementRef = useRef<HTMLDivElement | null>(null);
   const [isShown, setIsShown] = useState(false);
+  const [elProps, setElProps] = useState<PartialShowUpElementProps<T>>({});
 
   const showUpOptions: ShowUpOptions = {
     ...DEFAULT_SHOW_UP_OPTIONS,
@@ -45,8 +46,12 @@ export const useShowUp = <T = object>(
     ...options,
   };
 
-  const show = useCallback(() => {
+  const show = useCallback((elementProps?: PartialShowUpElementProps<T>) => {
     if (!isShown) {
+      if (elementProps) {
+        setElProps(elementProps);
+      }
+
       setIsShown(true);
       showUpOptions?.handleShow?.();
     }
@@ -59,7 +64,11 @@ export const useShowUp = <T = object>(
     }
   }, [isShown, showUpOptions?.handleHide]);
 
-  const toggle = useCallback(() => {
+  const toggle = useCallback((elementProps?: PartialShowUpElementProps<T>) => {
+    if (elementProps) {
+      setElProps(elementProps);
+    }
+
     if (isShown) {
       hide();
     } else {
@@ -78,7 +87,7 @@ export const useShowUp = <T = object>(
         createElement(
           showUpOptions.layout ?? UseShowUpLayout, { hide },
           createElement(
-            component, { hide, ...props },
+            component, { hide, ...props, ...elProps },
           ),
         ),
       )
