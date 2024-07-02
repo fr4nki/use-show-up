@@ -36,7 +36,7 @@ export const UseShowUpContainer: FC<PropsWithChildren<Props>> = ({
   showUpOptions,
 }) => {
   const handleEscKeyPress = useCallback((e: KeyboardEvent) => {
-    if (e.code.toLowerCase() === 'escape' && isShown && showUpOptions.hideOnPressEscButton) {
+    if (e.code && e.code.toLowerCase() === 'escape' && isShown && showUpOptions.hideOnPressEscButton) {
       hide();
     }
   }, []);

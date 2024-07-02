@@ -13,7 +13,7 @@ const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) =>
       <label>
         Input here
         <br />
-        <input />
+        <input type="text" placeholder="Enter something" id="name" name="name" />
       </label>
     </div>
 
