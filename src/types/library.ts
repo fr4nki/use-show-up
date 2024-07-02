@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode, RefObject } from 'react';
+import {ComponentType, HTMLAttributes, ReactNode, RefObject} from 'react';
 
 export type ShowUpElement<T = object> = ComponentType<T>;
 
@@ -23,4 +23,8 @@ export type ShowUpOptions = {
   handleShow?: () => void;
   layout?: ShowUpLayout | null;
   className?: string;
+  wrapperElementTag?: keyof HTMLElementTagNameMap;
+  wrapperElementAttributes?: ShowUpOptions['wrapperElementTag'] extends keyof HTMLElementTagNameMap
+    ? HTMLAttributes<ShowUpOptions['wrapperElementTag']>
+    : HTMLAttributes<HTMLDivElement>;
 };
