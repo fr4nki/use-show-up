@@ -1,4 +1,4 @@
-import {ComponentType, ReactNode, RefObject} from 'react';
+import { ComponentType, ReactNode, RefObject } from 'react';
 
 export type ShowUpElement<T = object> = ComponentType<T>;
 
