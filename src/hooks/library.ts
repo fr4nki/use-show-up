@@ -58,8 +58,10 @@ export const useShowUp = <T = object>(
   }, [isShown, showUpOptions?.handleShow]);
 
   const hide = useCallback(() => {
-    setIsShown(false);
-    showUpOptions?.handleHide?.();
+    if (isShown) {
+      setIsShown(false);
+      showUpOptions?.handleHide?.();
+    }
   }, [isShown, showUpOptions?.handleHide]);
 
   const toggle = useCallback((elementProps?: PartialShowUpElementProps<T>) => {
