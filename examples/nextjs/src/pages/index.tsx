@@ -6,6 +6,7 @@ const links = [
   { text: 'Render to ref', href: '/ref' },
   { text: 'Multiple providers', href: '/multipleProviders' },
   { text: 'Render in loop and override props', href: '/loop' },
+  { text: 'Props passings through show method', href: '/propsPassing' },
 ]
 
 const IndexPage = () => (

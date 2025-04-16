@@ -10,14 +10,6 @@ const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) =>
     <p>Title is "{title}"</p>
 
     <div>
-      <label>
-        Input here
-        <br />
-        <input type="text" placeholder="Enter something" id="name" name="name" />
-      </label>
-    </div>
-
-    <div>
       <button onClick={hide}>
         close me
       </button>
@@ -26,9 +18,7 @@ const ShowUpComponent: ShowUpComponent<{ title: string }> = ({ title, hide }) =>
 );
 
 const BasicPage = () => {
-  const [Element, show, hide, toggle] = useShowUp(ShowUpComponent, {
-    hideOnPressOutside: false,
-  });
+  const [Element, show, hide, toggle] = useShowUp(ShowUpComponent);
 
   return (
     <main style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -40,7 +30,9 @@ const BasicPage = () => {
 
       <p>Basic example</p>
 
-      <button onClick={() => show()}>Show</button>
+      <button onClick={() => show({ title: 'show1' })}>Show1</button>
+      <button onClick={() => show({ title: 'show2' })}>Show2</button>
+      <button onClick={() => show({ title: 'show3' })}>Show3</button>
       <button onClick={() => hide()}>Hide</button>
       <button onClick={() => toggle()}>Toggle</button>
     </main>
