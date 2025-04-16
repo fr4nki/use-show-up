@@ -1,6 +1,6 @@
 {
   "name": "use-show-up",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Simple React hook to render popups",
   "main": "dist/index.js",
   "scripts": {
